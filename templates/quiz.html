@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script type="text/javascript" src="{{ url_for('static', filename = 'quiz.js') }}"></script>
+<script>
+    let quizId =
+        Number({{ quizId| safe }});
+    let question =
+        {{ question | safe }}
+</script>
+<div class='header text-center mb-2'>
+    <div class='welcome'>{{ 'Anatomy Quiz' if quizId==1 else 'Quiz' }}</div>
+    <div id='results'>{{ question.question if quizId>1 else '' }}</div>
+</div>
+<div class='content'>
+    {% if quizId==1 %}
+    <div class="camera-view">
+        <div class="camera">
+            <img id='cameraDiagram' src="{{ url_for('static', filename = 'img/camera.png') }}" alt="Camera Diagram">
+            <input id="aperture" class="input-aperture input" />
+            <input id="iso" class="input-iso input" />
+            <input id="shutter speed" class="input-speed input" />
+            <input id="monitor" class="input-monitor input" />
+            <input id="view finder" class="input-view-finder input" />
+        </div>
+    </div>
+    {% elif quizId > 1 and quizId < 5 %} <div class='content'>
+        <div class="entry-field">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="entry-field">
+                        <div class="inline slider">
+                            {% if quizId == 2 %}
+                            <div class = "inputDisplay">
+                                <span class="limit">F/22</span>
+                                <span class="limit">F/4</span>
+                                <span class="limit">F/2.8</span>
+                            </div>
+                            <input type="range" id="sliderBar" onchange='setImage(quizId)' min="1" max="3" value="1"
+                            step="1" />
+                            {% elif quizId == 3 %}
+                            <div class = "inputDisplay">
+                                <span class="limit">ISO 12800</span>
+                                <span class="limit">ISO 1600</span>
+                                <span class="limit">ISO 100</span>
+                            </div>
+                            <input type="range" id="sliderBar" onchange='setImage(quizId)' min="1" max="3" value="1"
+                                step="1" />
+                            {% else %}
+                            <div class = "inputDisplay">
+                                <span class="limit">1/750</span>
+                                <span class="limit">1/250</span>
+                                <span class="limit">1/10</span>
+                            </div>
+                            <input type="range" id="sliderBar" onchange='setImage(quizId)' min="1" max="3" value="1"
+                                step="1" />
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {% if quizId == 2 %}
+                    <img class=small_img src="{{ url_for('static', filename = 'images/aperture/1.png') }}">
+                    {% elif quizId == 3 %}
+                    <img class=small_img src="{{ url_for('static', filename = 'images/iso/3.png') }}">
+                    {% else %}
+                    <img class=small_img src="{{ url_for('static', filename = 'images/sspeed/2.png') }}">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class='learn_camera'>
+            <div class="row">
+                <img id='cameraDiagram' src="{{ url_for('static', filename = 'img/camera.png') }}" alt="Camera Diagram">
+                {% if quizId == 2 %}
+                <img class="aperture_img" id='update' src='/static/images/aperture/1.png' />
+                {% elif quizId == 3 %}
+                <img class="iso_img" id="update" src="/static/images/iso/1.png">
+                {% else %}
+                <img class="sspeed_img" id="update" src="/static/images/sspeed/1.png">
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="p-5">
+                    {% for answer in question.answers %}
+                    <div class="mb-2">
+                        <span class="mr-4">{{ answer_select[(loop.index-1)] }})</span>{{ answer }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="d-flex flex-row">
+                    <span>Choose here:</span>
+                    <div class="d-flex flex-row">
+                        <div class="d-flex flex-column ml-3 mr-3 align-items-center">
+                            <input class="answer" value="0" name="answer" type="radio" />
+                            A
+                        </div>
+                        <div class="d-flex flex-column ml-3 mr-3 align-items-center">
+                            <input class="answer" value="1" name="answer" type="radio" />
+                            B
+                        </div>
+                        <div class="d-flex flex-column ml-3 mr-3 align-items-center">
+                            <input class="answer" value="2" name="answer" type="radio" />
+                            C
+                        </div>
+                        <div class="d-flex flex-column ml-3 mr-3 align-items-center">
+                            <input class="answer" value="3" name="answer" type="radio" />
+                            D
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <!-- <div id = status>
+            You are on question {{curr}} of 10 
+        </div> -->
+        <div id="buttons" class='content'>
+            <!-- <button id='next' class='btn btn-outline-primary'> Next</button> -->
+            <button id='next' class='btn btn-outline-primary'> Next</button>
+            <button id='submit' class='btn btn-outline-primary'> Submit</button>
+
+        </div>
+        {% endblock %}

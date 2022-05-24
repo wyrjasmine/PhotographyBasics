@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename = 'start.js') }}"></script>
+    <script>
+        let curr = {{curr|tojson}}
+        let num = {{num|tojson}}
+    </script>
+
+    <div class='header'>
+        <div class='welcome'>Quiz</div>
+    </div>
+    <div id='progress'>
+    </div>
+    <div class='content'>
+         <button id = 'next' class="btn btn-outline-primary">Start</button>
+    </div>
+{% endblock %}
