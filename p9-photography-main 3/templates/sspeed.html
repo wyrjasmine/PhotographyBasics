@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'sspeed.js') }}"></script>
+<div class = 'header'>
+    <div class = 'welcome'>Shutter Speed</div>
+</div>
+<div class = 'description'>
+    The shutter speed is the length of time that the photo is being taken. 
+    A <span class = "bold">short shutter speed</span> freezes motion, 
+    which <span class = "bold">is great for fast moving objects </span>.
+    A <span class = "bold">long shutter speed </span> can create <span class = "bold">motion blur</span> in moving objects.
+    <div class = "instructions" >
+        Test it out with the slider bar below!
+    </div>
+</div><br>
+<div class = 'content'>
+    <div class = "inputDisplay">
+        <span class="limit">1/750</span>
+        <span class="limit">1/250</span>
+        <span class="limit">1/10</span>
+    </div>
+    <input type="range" id="sliderBar" onchange='setImage()'  min="1" max="3" value="1" step="1" />
+<div class = 'learn_camera'> 
+    <div class = "row ">
+        <img id='cameraDiagram' src="{{ url_for('static', filename = 'img/camera.png') }}" alt="Camera Diagram">
+        <img class = "sspeed_img" id = "update" src="/static/images/sspeed/1.png">
+    </div>    
+</div>
+<div class="buttons">
+    <button id = 'back' class = 'btn btn-outline-primary'> Return to ISO</button>        
+    <button id = 'next' class = 'btn btn-outline-primary'> Continue to Quiz</button>
+</div>
+</div>
+{% endblock %}
